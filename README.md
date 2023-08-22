@@ -7,4 +7,10 @@ Paper: When Will You Arrive_ Estimating Travel Time Based on Deep Neural Network
 GitHub Repository: https://github.com/UrbComp/DeepTTE
 
 
+Here is the framework of our proposed model:
+
+![image](https://github.com/Zejabati/Travel_Time_Estimation_deep_learning/assets/65095428/9bbe92ce-2b6b-42de-bf92-edd29fe16f5b)
+
+
+
 
