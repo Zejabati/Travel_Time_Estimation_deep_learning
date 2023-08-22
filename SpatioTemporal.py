@@ -79,43 +79,7 @@ class Net(nn.Module):
                               hidden_size = 128, \
                               num_layers = 1, \
                               batch_first = True)
-
-
-        elif rnn == 'transformerE':
-            print('d',num_filter,attr_size,num_filter + 1 + attr_size )
-            self.encoder_layer = nn.TransformerEncoderLayer(d_model= num_filter + 1 + attr_size, nhead=4,batch_first=True,norm_first=True)
-            self.enc_norm = nn.LayerNorm(64)
-
-            self.rnn = nn.TransformerEncoder(self.encoder_layer, num_layers=6,norm=self.enc_norm)
-            print('ccccccc')
-            self.packed_sequence=False
-            self.MVCNN= False
-
-        elif rnn == 'transformerE+pos':
-            self.pos_encoder = PositionalEncoding(num_filter + 1 + attr_size)
-            self.encoder_layer = nn.TransformerEncoderLayer(d_model=num_filter + 1 + attr_size, nhead=4,batch_first=True,norm_first=True)
-            self.enc_norm = nn.LayerNorm(64)
-
-            self.rnn = nn.TransformerEncoder(self.encoder_layer, num_layers=6,norm=self.enc_norm)
-            self.packed_sequence=False
             
-        elif rnn == 'MVCNN':
-            print('MVCNN2')
-            #num_filter + 1 + attr_size
-            self.pos_encoder = PositionalEncoding(64)
-            self.conv0 = nn.Conv1d(32, 64, kernel_size=3, padding='same')
-            self.conv1 = nn.Conv1d(64, 64, kernel_size=1, padding='same')
-            self.conv2 = nn.Conv1d(64, 64, kernel_size=3, padding='same')
-            self.conv3 = nn.Conv1d(64, 64, kernel_size=5, padding='same')
-            self.conv4 = nn.Conv1d(128, 64, kernel_size=3, padding='same')
-            self.norm= nn.BatchNorm1d(64)
-
-            self.encoder_layer = nn.TransformerEncoderLayer(d_model=64, nhead=4,batch_first=True,norm_first=True)
-            self.enc_norm = nn.LayerNorm(64)
-
-            self.rnn = nn.TransformerEncoder(self.encoder_layer, num_layers=3,norm=self.enc_norm)
-            self.packed_sequence=False
-            self.MVCNN= True
         elif rnn== 'TCN':
             print('TCN')
             class TCN(nn.Module):
@@ -186,13 +150,14 @@ class Net(nn.Module):
             self.rnn0=TCN(96,96,3,1)
             self.rnn1=TCN(96,96,3,1)
             
-            self.packed_sequence0=False
-            self.MVCNN= False
             
             self.BiLSTM = nn.LSTM(input_size = 96, \
                                       hidden_size = 128, \
                                       num_layers = 2, \
                                       batch_first = True , bidirectional= True)
+
+            self.packed_sequence0=False
+            self.MVCNN= False
             self.packed_sequence1 = True
             
             
